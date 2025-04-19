@@ -1,0 +1,553 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow-x: hidden;
+        padding: 1rem;
+    }
+
+    .dominican-flag {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right,
+            #002d62 calc(25% - 50px),
+            white calc(25% - 50px) calc(25% + 50px),
+            #ce1126 calc(25% + 50px) calc(75% - 50px),
+            white calc(75% - 50px) calc(75% + 50px),
+            #002d62 calc(75% + 50px) 100%
+        );
+        z-index: -1;
+        opacity: 0.9;
+    }
+
+    .flag-emblem {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 150px;
+        height: 150px;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ce1126"/><circle cx="50" cy="50" r="35" fill="%23002d62"/><path d="M50 15 L55 45 H85 L60 60 L70 90 L50 70 L30 90 L40 60 L15 45 H45 Z" fill="white"/></svg>') center/contain no-repeat;
+        opacity: 0.2;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 95%;
+        max-width: 600px;
+        backdrop-filter: blur(5px);
+        position: relative;
+        margin: 1rem auto;
+    }
+
+    h1 {
+        color: #002d62;
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .author {
+        color: #666;
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .timer-section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 0.3rem 0.5rem;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        display: inline-block;
+        z-index: 1;
+    }
+
+    .timer {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #002d62;
+        font-family: 'Courier New', monospace;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        line-height: 1;
+    }
+
+    .timer-label {
+        font-size: 0.6rem;
+        color: #666;
+        margin-top: 0.1rem;
+        text-align: center;
+    }
+
+    .teams {
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .team {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-header {
+        margin-bottom: 0.5rem;
+    }
+
+    h2 {
+        color: #002d62;
+        margin-bottom: 0.2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    h2:hover {
+        color: #ce1126;
+    }
+
+    h3 {
+        color: #002d62;
+        margin: 1rem 0 0.5rem;
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-hint {
+        font-size: 0.7rem;
+        color: #666;
+        display: block;
+    }
+
+    .score {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #002d62;
+        margin-bottom: 0.8rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+        background-color: #002d62;
+        color: white;
+        border: none;
+        padding: 0.6rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    button:hover {
+        background-color: #001a3a;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .reset-btn {
+        background-color: #ce1126;
+        margin-top: 0.8rem;
+    }
+
+    .reset-btn:hover {
+        background-color: #a30d1d;
+    }
+
+    .winner {
+        background-color: #002d62;
+        color: white;
+        padding: 0.8rem;
+        border-radius: 4px;
+        margin: 0.8rem 0;
+        font-weight: bold;
+        animation: winnerPulse 2s infinite;
+    }
+
+    .history-section {
+        margin-top: 1rem;
+        text-align: left;
+    }
+
+    .history-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 0.8rem;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .game-history {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .history-entry {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 0.6rem;
+        border-radius: 4px;
+        border-left: 3px solid #002d62;
+        font-size: 0.85rem;
+    }
+
+    .history-entry.winner-entry {
+        border-left-color: #ce1126;
+    }
+
+    @keyframes winnerPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+        100% { transform: scale(1); }
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            align-items: flex-start;
+            padding: 0.5rem;
+        }
+        
+        .container {
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 1rem;
+        }
+        
+        h1 {
+            font-size: 1.3rem;
+        }
+        
+        .timer {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 0.5rem;
+        }
+
+        .teams {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .container {
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        .score {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dominican-flag {
+            background: linear-gradient(to bottom,
+                #002d62 calc(25% - 25px),
+                white calc(25% - 25px) calc(25% + 25px),
+                #ce1126 calc(25% + 25px) calc(75% - 25px),
+                white calc(75% - 25px) calc(75% + 25px),
+                #002d62 calc(75% + 25px) 100%
+            );
+        }
+
+        .flag-emblem {
+            width: 100px;
+            height: 100px;
+        }
+
+        .timer-section {
+            padding: 0.2rem 0.4rem;
+            top: 0.3rem;
+            right: 0.3rem;
+        }
+
+        .timer {
+            font-size: 0.9rem;
+        }
+
+        .timer-label {
+            font-size: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 1.1rem;
+        }
+        
+        button {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.85rem;
+        }
+        
+        .history-container {
+            max-height: 150px;
+        }
+    }
+    
+    @media (max-height: 700px) {
+        .container {
+            margin-top: 0.5rem;
+            padding: 0.8rem;
+        }
+        
+        .history-container {
+            max-height: 120px;
+        }
+    }
+
+    /* Styles for the numbers panel */
+    .numbers-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        z-index: 1000;
+        width: 300px;
+        max-width: 90%;
+    }
+
+    .numbers-title {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .display-value {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+        text-align: right;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #002d62;
+        min-height: 50px;
+        overflow: hidden;
+    }
+
+    .numbers-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .number-btn {
+        padding: 12px;
+        font-size: 1.4rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .number-btn:hover {
+        background-color: #0069d9;
+    }
+
+    .number-clear {
+        padding: 12px;
+        font-size: 1.4rem;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .number-clear:hover {
+        background-color: #c82333;
+    }
+
+    .number-submit {
+        padding: 12px;
+        font-size: 1.4rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .number-submit:hover {
+        background-color: #218838;
+    }
+
+    @media (max-width: 360px) {
+        .numbers-panel {
+            padding: 15px;
+            width: 260px;
+        }
+        
+        .numbers-grid {
+            gap: 6px;
+        }
+        
+        .number-btn,
+        .number-clear,
+        .number-submit {
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .display-value {
+            font-size: 1.6rem;
+            padding: 8px;
+            min-height: 45px;
+        }
+    }
+
+    /* History button in the top left corner */
+    .history-button {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        width: 40px;
+        height: 40px;
+        background-color: #002d62;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .history-button:hover {
+        transform: scale(1.1);
+        background-color: #001a3a;
+    }
+
+    /* History panel styles */
+    .history-panel {
+        position: fixed;
+        top: 60px;
+        left: 15px;
+        width: 300px;
+        max-width: 85vw;
+        background-color: rgba(255, 255, 255, 0.97);
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 200;
+        transition: all 0.3s ease;
+        max-height: 50vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .history-panel.hidden {
+        transform: translateY(-20px);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .history-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .history-panel-header h3 {
+        margin: 0;
+        color: #002d62;
+    }
+
+    .close-history {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+
+    .close-history:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: #333;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .history-container {
+        overflow-y: auto;
+        padding: 10px;
+        max-height: calc(50vh - 50px);
+        flex: 1;
+    }
+
+    @media (max-width: 480px) {
+        .history-button {
+            top: 10px;
+            left: 10px;
+            width: 36px;
+            height: 36px;
+        }
+        
+        .history-panel {
+            top: 55px;
+            left: 10px;
+            max-height: 40vh;
+        }
+        
+        .history-container {
+            max-height: calc(40vh - 50px);
+        }
+    } 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KAPIHUNTER</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dominican-flag">
+        <div class="flag-emblem"></div>
+    </div>
+    
+    <!-- Botón de historial en la esquina superior izquierda -->
+    <div class="history-button" id="historyButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 8v4l3 3"></path>
+            <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+    </div>
+    
+    <!-- Panel de historial visible inicialmente -->
+    <div class="history-panel" id="historyPanel">
+        <div class="history-panel-header">
+            <h3>Historial de Partidas</h3>
+            <button class="close-history" id="closeHistory">×</button>
+        </div>
+        <div class="history-container">
+            <div id="gameHistory" class="game-history">
+                <!-- El historial se agregará aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1>KAPIHUNTER</h1>
+        <div class="author">Darlin Basilio Cordero</div>
+        
+        <div class="timer-section">
+            <div class="timer" id="timer">00:00:00</div>
+            <div class="timer-label">Tiempo de Partida</div>
+        </div>
+
+        <div class="teams">
+            <div class="team">
+                <div class="team-header">
+                    <h2 id="teamName1" onclick="editTeamName(1)">Equipo 1</h2>
+                    <span class="edit-hint">(Clic para editar)</span>
+                </div>
+                <div class="score" id="score1">0</div>
+                <button onclick="addPoints(1)">Añadir Puntos</button>
+            </div>
+            
+            <div class="team">
+                <div class="team-header">
+                    <h2 id="teamName2" onclick="editTeamName(2)">Equipo 2</h2>
+                    <span class="edit-hint">(Clic para editar)</span>
+                </div>
+                <div class="score" id="score2">0</div>
+                <button onclick="addPoints(2)">Añadir Puntos</button>
+            </div>
+        </div>
+
+        <div id="winner" class="winner hidden"></div>
+        <button onclick="resetGame()" class="reset-btn">Nuevo Juego</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
